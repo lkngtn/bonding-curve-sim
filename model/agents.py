@@ -47,8 +47,9 @@ class RandomTrader(Trader):
 
     def step_strategy(self):
         self.current_price = self.market.current_price()
-        self.value_belief = np.random.normal(0, self.sigma)
+        self.value_belief = np.random.normal(0, 0.2)
+
         if self.value_belief < 0 and self.tokens > 0:
-            self.sell(self.tokens * self.value_belief)
+            self.sell(self.tokens * abs(self.value_belief))
         elif self.currency > 0:
-            self.buy(self.currency * self.value_belief)
+            self.buy(self.currency * abs(self.value_belief))

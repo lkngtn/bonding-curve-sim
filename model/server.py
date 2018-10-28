@@ -13,19 +13,23 @@ from model.model import RandomMarket
 chart1 = ChartModule([
     {"Label": "Gini", "Color": "#56bfdf"}],
     data_collector_name='datacollector',
-    canvas_height=300, canvas_width=300
+    canvas_height=150, canvas_width=150
 )
 
 chart2 = ChartModule([
     {"Label": "Price", "Color": "#56bfdf"}],
     data_collector_name='datacollector',
-    canvas_height=300, canvas_width=300
+    canvas_height=150, canvas_width=150
 )
 
 chart3 = ChartModule([
     {"Label": "Token_Supply", "Color": "#56bfdf"},
-    {"Label": "Currency_Supply", "Color": "#c66657"},
-    {"Label": "Total_Wealth", "Color": "#7bb36e"}],
+    {"Label": "Currency_Supply", "Color": "#c66657"}],
+    data_collector_name='datacollector',
+    canvas_height=300, canvas_width=300
+)
+
+chart4 = ChartModule([{"Label": "Total_Wealth", "Color": "#7bb36e"}],
     data_collector_name='datacollector',
     canvas_height=300, canvas_width=300
 )
@@ -33,15 +37,15 @@ chart3 = ChartModule([
 
 server = ModularServer(
     RandomMarket,
-    [chart1,chart2,chart3],
+    [chart3,chart4,chart1,chart2],
     name="Random Agent Bonding Curve Sim",
     model_params={
+        "ratio": UserSettableParameter('slider', "Bonding Curve Reserve Ratio", 0.33, 0.01, 1.0, 0.01,
+                                       description="Constant reserve ration maintained by the bonding curve different values change price function"),
         "num_agents": UserSettableParameter('slider', "Number of Agents", 50, 10, 100, 1,
                                description="Choose how many agents to include in the model"),
         "token_supply": UserSettableParameter('slider', "Number of tokens", 5000, 1000, 10000, 1,
                                    description="Choose how many tokens in supply, tokens are split evenly among jurors at initialization."),
-        "ratio": UserSettableParameter('slider', "Bonding Curve Reserve Ratio", 0.33, 0.01, 1, 0.01,
-                                   description="Constant reserve ration maintained by the bonding curve different values change price function"),
         "agent_belief_sigma": UserSettableParameter('slider', "Agent Belief Sigma", 0.25, 0.05, 0.5, 0.05,
                                     description="standard deviation of agent beliefs, higher value means agents are more likely to make large trades"),
         "agent_starting_currency": UserSettableParameter('slider', "Agent Starting Currency", 100, 1, 1000, 1,
