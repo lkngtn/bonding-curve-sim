@@ -22,10 +22,18 @@ chart2 = ChartModule([
     canvas_height=300, canvas_width=300
 )
 
+chart3 = ChartModule([
+    {"Label": "Token_Supply", "Color": "#56bfdf"},
+    {"Label": "Currency_Supply", "Color": "#c66657"},
+    {"Label": "Total_Wealth", "Color": "#7bb36e"}],
+    data_collector_name='datacollector',
+    canvas_height=300, canvas_width=300
+)
+
 
 server = ModularServer(
     RandomMarket,
-    [chart1,chart2],
+    [chart1,chart2,chart3],
     name="Random Agent Bonding Curve Sim",
     model_params={
         "num_agents": UserSettableParameter('slider', "Number of Agents", 50, 10, 100, 1,

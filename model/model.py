@@ -17,6 +17,15 @@ def compute_gini(model):
 def compute_price(model):
     return model.market.current_price()
 
+def compute_token_supply(model):
+    return model.market.token_supply
+
+def compute_currency_supply(model):
+    return sum([agent.currency for agent in model.schedule.agents]) + model.market.reserve
+
+def compute_cumulative_wealth(model):
+    return sum([agent.wealth for agent in model.schedule.agents])
+
 class BondingCurve():
     '''
         A class for bonding curve based token economies
@@ -61,7 +70,7 @@ class RandomMarket(Model):
             self.schedule.add(a)
         self.running = True
         self.datacollector = DataCollector(
-            model_reporters={"Gini": compute_gini, "Price": compute_price},
+            model_reporters={"Gini": compute_gini, "Price": compute_price, "Token_Supply": compute_token_supply, "Currency_Supply": compute_currency_supply, "Total_Wealth": compute_cumulative_wealth},
             agent_reporters={"Wealth": "wealth"}
         )
         self.datacollector.collect(self)
@@ -69,6 +78,10 @@ class RandomMarket(Model):
     def step(self):
         self.schedule.step()
         # collect data
+        print("Gini: " + str(compute_gini(self)))
+        print("Total Wealth: " + str(compute_cumulative_wealth(self)))
+        print("Currency Supply: " + str(compute_currency_supply(self)))
+        print("Token Supply: " + str(compute_token_supply(self)))
         self.datacollector.collect(self)
 
     def run_model(self, n):
