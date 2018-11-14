@@ -31,7 +31,7 @@ class RandomMarket(Model):
     '''
         A simulation of random trading behavior against a bonding curve based market.
     '''
-    def __init__(self, num_agents, token_supply, ratio, agent_starting_currency, agent_belief_sigma):
+    def __init__(self, num_agents, token_supply, ratio, agent_starting_currency):
         super().__init__()
         self.num_agents = num_agents
         self.market = BondingCurve(token_supply, ratio)
@@ -40,7 +40,7 @@ class RandomMarket(Model):
 
         # Instatiate agents
         for i in range(self.num_agents):
-            a = RandomTrader(i, self, self.market, agent_starting_currency, (self.market.token_supply/self.num_agents), agent_belief_sigma)
+            a = RandomTrader(i, self, self.market, agent_starting_currency, (self.market.token_supply/self.num_agents))
             self.schedule.add(a)
         self.running = True
         self.datacollector = DataCollector(

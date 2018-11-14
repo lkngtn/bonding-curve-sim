@@ -46,8 +46,6 @@ server = ModularServer(
                                description="Choose how many agents to include in the model"),
         "token_supply": UserSettableParameter('slider', "Number of tokens", 5000, 1000, 10000, 1,
                                    description="Choose how many tokens in supply, tokens are split evenly among jurors at initialization."),
-        "agent_belief_sigma": UserSettableParameter('slider', "Agent Belief Sigma", 0.25, 0.05, 0.5, 0.05,
-                                    description="standard deviation of agent beliefs, higher value means agents are more likely to make large trades"),
         "agent_starting_currency": UserSettableParameter('slider', "Agent Starting Currency", 100, 1, 1000, 1,
                                     description="standard deviation for agent beliefs of the true value relative to current price")
 
